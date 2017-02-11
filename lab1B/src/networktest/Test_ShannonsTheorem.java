@@ -27,23 +27,20 @@
 
 package networktest;
 
-//import org.junit.Test;
-
 import junit.framework.*;
 import network.ShannonsTheorem;
 
 /**
  *	JUnit tests for the ShannonsTheorem class from the "network" project.
  * @author Jean Ko
- * @version 1.0.1
+ * @version 1.0.0
  */
-public class Test_ShannonsModel extends TestCase {
-
+public class Test_ShannonsTheorem extends TestCase {
 
 	/**
 	 * @param name 
 	 */
-	public Test_ShannonsModel(String name) { super(name);	}
+	public Test_ShannonsTheorem(String name) { super(name);	}
 
 	/**
 	 * @return object it self.
@@ -60,6 +57,7 @@ public class Test_ShannonsModel extends TestCase {
 	 * Test the constructors.
 	 */
 	public void testConstructors() {
+		boolean myAssert = false;
 		System.out.println("\tExecuting Test_ShannonsTheorem.testConstructors");
 		shannonsTheorem = new ShannonsTheorem();
 		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors: ShannonsTheorem is null", shannonsTheorem);
@@ -67,14 +65,25 @@ public class Test_ShannonsModel extends TestCase {
 		shannonsTheorem = new ShannonsTheorem(34000000, 0.2);
 		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors1: ShannonsTheorem is null", shannonsTheorem);
 
-		shannonsTheorem = new ShannonsTheorem(340.0000000, -0.2);
-		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors2: ShannonsTheorem is null", shannonsTheorem);
+		try{
+			myAssert = false;
+			shannonsTheorem = new ShannonsTheorem(340.0000000, -0.2);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
 
-		shannonsTheorem = new ShannonsTheorem(34000000.3452123, 0.2);
-		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors3: ShannonsTheorem is null", shannonsTheorem);
-
-		shannonsTheorem = new ShannonsTheorem(-4938.29839, 0.2);
-		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors4: ShannonsTheorem is null", shannonsTheorem);
+		try{
+			myAssert = false;
+			shannonsTheorem = new ShannonsTheorem(-4938.29839, 0.2);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
 
         shannonsTheorem = new ShannonsTheorem(12345, 3745);
 		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors5: ShannonsTheorem is not null", shannonsTheorem);
@@ -85,11 +94,26 @@ public class Test_ShannonsModel extends TestCase {
         shannonsTheorem = new ShannonsTheorem(34000000, 0);
 		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors7: ShannonsTheorem is not null", shannonsTheorem);
 
-        shannonsTheorem = new ShannonsTheorem(34000000, -0.2);
 		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors8: ShannonsTheorem is not null", shannonsTheorem);
+		try{
+			myAssert = false;
+	        shannonsTheorem = new ShannonsTheorem(34000000, -0.2);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
 
-        shannonsTheorem = new ShannonsTheorem(0.723, -0.2);
-		assertNotNull("\t\tTest_ShannonsTheorem.testConstructors9: ShannonsTheorem is not null", shannonsTheorem);
+		try{
+			myAssert = false;
+	        shannonsTheorem = new ShannonsTheorem(0.723, -0.2);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
 
 
 
@@ -133,11 +157,28 @@ public class Test_ShannonsModel extends TestCase {
         assertEquals(0.7,shannonsTheorem.getSignalToNoise());
         System.out.println(shannonsTheorem);
 
-        shannonsTheorem.setBandwidth(-2345555);
-        shannonsTheorem.setSignalToNoise(-0.7);
-        assertTrue(-233363.0 != shannonsTheorem.getBandwidth());
+        boolean myAssert = false;
+		try{
+			myAssert = false;
+	        shannonsTheorem.setBandwidth(-2345555);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
+
+		try{
+			myAssert = false;
+			shannonsTheorem.setSignalToNoise(-0.7);
+		}
+		catch(NumberFormatException e)
+		{
+			myAssert = true;	
+		}
+		assertTrue(myAssert);
         System.out.println(shannonsTheorem.getSignalToNoise());
-        assertTrue(0.0 == shannonsTheorem.getSignalToNoise());
+        assertTrue(0.7 == shannonsTheorem.getSignalToNoise());
 
         System.out.println(shannonsTheorem);
 	}

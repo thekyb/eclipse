@@ -27,78 +27,63 @@
 
 package network;													/*	Package for class placement	*/
 
-import java.awt.Component;
-
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * descrived about the Shannon's theorem.
  * @author    Jean Ko
- * @version   1.0.0   2017. 1. 23.
+ * @version   1.1.0   2017. 2. 5.
  */
 public class ShannonsTheorem	{
 
-	/* ATTRIBUTES	-----------------------------------------------------	*/
-	/* TODO:	Place Attributes here.													*/
-    
-	/**
-     * applicable wave frequency. 
-     */
-    private double bandwidth;
     /**
-     * How much noise occurs in the signal
+     * model in MVC pattern for ShannonsTheorem
      */
-    private double signalToNoise;
+    private ShannonsModel model;
 
-	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default constructor.
      *	the bandwidth and signalToNoise will be zero.
 	 */
 	public ShannonsTheorem(){
-		this(0, 0);
+		model = new ShannonsModel(0, 0);
 	}
 	/**
      * Parameterized constructor 
-	 * @param h bandwidth
+	 * @param h bandwidth : how much herz I can use as a signal
 	 * @param snr signalToNoise  signalToNoise should not be smaller than 0. if then set the signalToNoise into 0. 
 	 */
 	public ShannonsTheorem(double h, double snr){
-		super();
-		bandwidth = h;
-		if (snr < 0)
-			snr = 0;
-		signalToNoise = snr;
+		model = new ShannonsModel(h, snr);
 	}
-
-	/* ACCESSORS	-----------------------------------------------------	*/
 
     /**
      * getter for bandwidth 
-     * @return bandwidth;
+     * @return bandwidth : how much herz I can use as a signal
      */
     public double getBandwidth()
     {
-        return bandwidth;
+        return model.getBandwidth();
     }
     /**
      * getter for signalToNoise 
-     * @return signalToNoise ;
+     * @return signalToNoise : how much ratio can be delivered from the Noise
      */
     public double getSignalToNoise()
     {
-        return signalToNoise;
+        return model.getSignalToNoise();
     }
-
-	/* MODIFIERS	-----------------------------------------------------	*/
 
     /**
      * setter for Bandwidth
-     * @param h bandwidth
+	 * @param h bandwidth : how much herz I can use as a signal
      */
     public void setBandwidth(double h) {
-        bandwidth = h;
+        model.setBandwidth(h);
     }
 
     /**
@@ -106,49 +91,27 @@ public class ShannonsTheorem	{
 	 * @param snr signalToNoise  signalToNoise should not be smaller than 0. if then set the signalToNoise into 0. 
      */
     public void setSignalToNoise(double snr) {
-		if (snr < 0)
-			snr = 0;
-        signalToNoise = snr;
+		model.setSignalToNoise(snr);
     }
 
-
-	/*	NORMAL BEHAVIOR -------------------------------------------------	*/
-
-	/**
-     * Calculate and retern the value of the Maximum DataRate for the certain bandwidth and signalToNoise. 
-	 * @param hertz  bandwidth
-	 * @param signalToNoise  signal to Noise
-	 * @return MaximumDataRate
-	 */
-	private double getMaximumDataRate(double hertz, double signalToNoise){
-        return hertz * ( Math.log(1 + signalToNoise)/ Math.log(2));
-	}
 	/**
      * Calculate and retern the value of the Maximum DataRate using the own bandwidth and signalToNoise
 	 * @return MaximumDataRate
+	 * @throws Exception 
 	 */
-	public double getMaximumDataRate(){
-        return getMaximumDataRate(bandwidth, signalToNoise);
+	public double getMaximumDataRate() throws Exception{
+        return model.getMaximumDataRate();
 	}
-
-
 
 	/**
 	 *	Convert this class to a meaningful string.
 	 *	@return	This class as a meaningful string.
 	 */
 	 public String toString()	{
-		 return	"Bandwidth : " + getBandwidth() + "\n" + "Signal to Noise : " + getSignalToNoise() + "\n" + "MaximumDataRate : " + getMaximumDataRate();
+		 return	model.toString();
 	}
 
-
-	/* HELPER METHODS	--------------------------------------------------	*/
-	/* TODO:	Place helper methods here.												*/
-
-
-
-	/*	ENTRY POINT for STAND-ALONE OPERATION ---------------------------	*/
-	/**
+    /**
 	 * Entry point "main()" as required by the JVM.
 	 * @param  args   Standard command line parameters (arguments) as a
 	 *	string array.
@@ -157,26 +120,58 @@ public class ShannonsTheorem	{
 		ShannonsTheorem app = new ShannonsTheorem();
 
 		JFrame frame = new JFrame("InputDialog Example #1");
-		String myh = (String)JOptionPane.showInputDialog(
-                frame,
-                "Hertz",
-                "Get Information",
-                JOptionPane.PLAIN_MESSAGE, null,
-                null,
-                null);
 		
-		String myStn = (String)JOptionPane.showInputDialog(
-                frame,
-                "Signal to noize",
-                "Get Information",
-                JOptionPane.PLAIN_MESSAGE, null,
-                null,
-                null);
-		//If a string was returned, say so.
-		app.setBandwidth(Double.parseDouble(myh));
-		app.setSignalToNoise(Double.parseDouble(myStn));
-		System.out.println(app);
-	}
+		while (true)
+		{
+			try
+			{
+				String[] options = {"OK"};
+				JPanel panel = new JPanel();
+				JLabel lbl = new JLabel("Hertz: ");
+				JTextField txt = new JTextField(15);
+				panel.add(lbl);
+				panel.add(txt);
+				JOptionPane.showOptionDialog(null, panel, "Get Information", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+				
+				app.setBandwidth(Double.parseDouble(txt.getText()));
+				
+				JPanel panel2 = new JPanel();
+				JLabel lbl2 = new JLabel("Signal to noize");
+				JTextField txt2 = new JTextField(15);
+				panel2.add(lbl2);
+				panel2.add(txt2);
+				JOptionPane.showOptionDialog(null, panel2, "Get Information", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
 
+				app.setSignalToNoise(Double.parseDouble(txt2.getText()));
 
-}	/*	End of CLASS:	ShannonsTheorem.java			*/
+				JOptionPane.showMessageDialog(frame, app.toString());
+			}
+			catch(Exception e)
+			{
+				String[] options = {"OK"};
+				JPanel panel = new JPanel();
+				JLabel lbl = new JLabel("You put Wrong Number. Will you try it again? If you want to stop, please input \"N\".");
+				JTextField txt = new JTextField(15);
+				panel.add(lbl);
+				panel.add(txt);
+				JOptionPane.showOptionDialog(null, panel, "Get Information", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+
+				if (txt.getText().compareTo("N") == 0 || txt.getText().compareTo("n") == 0){
+					break;
+				}
+			}
+
+			String[] options = {"OK"};
+			JPanel panel = new JPanel();
+			JLabel lbl = new JLabel("Will you try it again? If you want to stop, please input \"N\".");
+			JTextField txt = new JTextField(15);
+			panel.add(lbl);
+			panel.add(txt);
+			JOptionPane.showOptionDialog(null, panel, "Get Information", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+
+			if (txt.getText().compareTo("N") == 0 || txt.getText().compareTo("n") == 0){
+				break;
+			}
+        }
+	}	/*	End of CLASS:	ShannonsTheorem.java			*/
+}
