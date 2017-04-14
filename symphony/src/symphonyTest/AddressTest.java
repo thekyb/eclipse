@@ -8,10 +8,7 @@ Professor: Leanne Seaward & Reg Dyer
 Purpose: This class is used to create an ContactInfo object for each person.
 */
 
-
 package symphonyTest;
-
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 

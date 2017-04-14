@@ -20,10 +20,14 @@ package symphony;
 public class Person {
     private String firstName;
     private String lastName;
-    private String gender;// TODO generate enum 
+    private Gender gender;// TODO generate enum 
     private int age;
 
-    public void Person(String firstName, String lastName, String gender, int age){
+	public enum Gender {
+	    MAIL, FEMAIL
+	}
+
+    public Person(String firstName, String lastName, Gender gender, int age){
         setFirstName(firstName);
         setLastName(lastName);
         setGender(gender);
@@ -46,11 +50,11 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public String getGender(){
+    public Gender getGender(){
         return this.gender;
     }
 
-    public void setGender(String gender){
+    public void setGender(Gender gender){
         this.gender = gender;
     }
 

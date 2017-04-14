@@ -11,7 +11,7 @@
  */
 package symphonyTest;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import symphony.Conductor;
 /** 
@@ -24,7 +24,7 @@ import symphony.Conductor;
 
 public class ConductorTest {
 
-@test
+@Test
 public ConductorTest(){
     System.out.println("Excuting Conductor's default constructor");
     Conductor conductor = new Conductor(new PhoneNumber("613","413","3678"),

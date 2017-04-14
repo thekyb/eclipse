@@ -11,22 +11,28 @@
  */
 package symphony;
 
+import symphony.Person.Gender;
+
 /** 
 * @author Seokhwan Lee
 * @version 1-1
 * @since 1.8.0 
 */
-public class Musician {
+public class Musician extends Person{
 
-    private String expertise;
     private int id;
+    private String expertise;
 
-    public Musician(String expertise, int id){
-        setExpertise(expertise);
+    public Musician(String firstName, String lastName, Gender gender, int age){
+        super(firstName, lastName, gender, age);
+    }
+    public Musician(String firstName, String lastName, Gender gender, int age, String experties, int id){
+        this(firstName, lastName, gender, age);
+    	setExpertise(expertise);
         setId(id);
     }
 
-    public String getExpertise(){
+	public String getExpertise(){
         return expertise;
     }
 

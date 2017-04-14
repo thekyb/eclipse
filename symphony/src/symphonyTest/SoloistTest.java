@@ -9,6 +9,7 @@
   Purpose: This class provides test for method of Soloist class.
  
  */
+
 package symphonyTest;
 
 import static org.junit.Assert.*;

@@ -9,9 +9,12 @@
   Purpose: 
  
  */
+
 package symphonyTest;
 
-import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import symphony.Composer;
 
 /** 
@@ -22,10 +25,6 @@ import symphony.Composer;
 */
 public class ComposerTest {
 
-    @Test
-    public ComposerTest(){
-
-    }
     @Test
     public void makeCompositionTest(String Name){
     

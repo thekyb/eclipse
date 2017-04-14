@@ -90,18 +90,18 @@ public class ConcertSeason {
         Date Opening = null;  
     	for(ScheduledConcert m : mConsertList)
     	{
-            if (Opening == null || Opening. > m.getDateList().get(0))            
-                Opening = m.getDate();
+            if (Opening == null || Opening.after(m.getDateList().get(0)))            
+                Opening = m.getDateList().get(0);
     	}
         return Opening;
     }
 
-    public void checkCloseDate(){
+    public Date checkCloseDate(){
         Date closeDate = null;  
     	for(ScheduledConcert m : mConsertList)
     	{
-            if (closeDate == null || closeDate < m.getDate())            
-                closeDate = m.getDate();
+            if (closeDate == null || closeDate.before(m.getDateList().get(m.getDateList().size()-1)))           
+                closeDate = m.getDateList().get(m.getDateList().size()-1);
     	}
         return closeDate;
 
